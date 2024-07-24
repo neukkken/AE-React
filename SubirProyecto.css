@@ -1,0 +1,21 @@
+/* Ajusta el estilo del contenedor de la tarjeta */
+.card-container {
+  width: 80%; /* Ocupa el 80% del ancho del contenedor padre */
+  max-width: 800px; /* Establece un ancho máximo opcional */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  padding: 20px; /* Opcional: Agrega padding para mayor separación interna */
+  font-family: 'Arial', sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajusta el ancho de los elementos del formulario */
+.card-container .form-control {
+  width: 100%; /* Asegura que los elementos del formulario ocupen el 100% del ancho del contenedor */
+}
+
+/* Ajusta la altura del área de texto */
+.card-container textarea {
+  resize: none; /* Desactiva el redimensionamiento manual del área de texto */
+  overflow: hidden; /* Oculta las barras de desplazamiento */
+}
