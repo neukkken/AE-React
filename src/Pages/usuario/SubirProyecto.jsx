@@ -34,10 +34,13 @@ export default function SubirProyecto() {
     }));
   };
 
-  const handleCampoAdicionalChange = (index, value) => {
+  const handleCampoAdicionalChange = (index, field, value) => {
     setFormData((prevState) => {
       const newCamposAdicionales = [...prevState.camposAdicionales];
-      newCamposAdicionales[index] = value;
+      if (!newCamposAdicionales[index]) {
+        newCamposAdicionales[index] = {};
+      }
+      newCamposAdicionales[index][field] = value;
       return {
         ...prevState,
         camposAdicionales: newCamposAdicionales
@@ -48,7 +51,7 @@ export default function SubirProyecto() {
   const agregarCampoAdicional = () => {
     setFormData((prevState) => ({
       ...prevState,
-      camposAdicionales: [...prevState.camposAdicionales, ""]
+      camposAdicionales: [...prevState.camposAdicionales, { titulo: "", descripcion: "" }]
     }));
   };
 
@@ -151,28 +154,26 @@ export default function SubirProyecto() {
         </div>
 
         {formData.camposAdicionales.map((campo, index) => (
-  <div className="form-group" key={index}>
-    <label htmlFor={`campoAdicional${index}`}>Sesión {index + 1}:</label>
-    <input
-      type="text"
-      className="form-control"
-      id={`campoAdicional${index}`}
-      placeholder="Título de la sesión"
-      value={campo}
-      onChange={(e) => handleCampoAdicionalChange(index, e.target.value)}
-    />
-    <br></br>
-    
-    
-    <textarea
-      className="form-control"
-      id={`descripcionSesion${index + 1}`} // Ajustar el id para que sea único
-      placeholder="Descripción de la Sesión"
-      value={formData.camposAdicionales[index + 1]} // Ajustar el valor según el estado o datos
-      onChange={(e) => handleCampoAdicionalChange(index + 1, e.target.value)} // Ajustar el índice del handler
-    />
-  </div>
-))}
+          <div className="form-group" key={index}>
+            <label htmlFor={`campoAdicional${index}`}>Sesión {index + 1}:</label>
+            <input
+              type="text"
+              className="form-control"
+              id={`campoAdicional${index}`}
+              placeholder="Título de la sesión"
+              value={campo.titulo || ""}
+              onChange={(e) => handleCampoAdicionalChange(index, 'titulo', e.target.value)}
+            />
+            <br />
+            <textarea
+              className="form-control"
+              id={`descripcionSesion${index}`}
+              placeholder="Descripción de la Sesión"
+              value={campo.descripcion || ""}
+              onChange={(e) => handleCampoAdicionalChange(index, 'descripcion', e.target.value)}
+            />
+          </div>
+        ))}
 
         <button type="button" onClick={agregarCampoAdicional} className="btn btn-secondary mb-3">
            Agregar campo
