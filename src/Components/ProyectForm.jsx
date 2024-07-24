@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   CForm,
   CFormInput,
@@ -17,6 +17,7 @@ const ProyectForm = () => {
   const [projectName, setProjectName] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
+  const descriptionRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ const ProyectForm = () => {
       const response = await axios.post(
         'https://api.openai.com/v1/chat/completions',
         {
-          model: 'gpt-3.5-turbo',
+          model: 'gpt-4o-mini',
           messages: [
             {
               role: 'system',
@@ -39,7 +40,7 @@ const ProyectForm = () => {
             },
             {
               role: 'user',
-              content: `Mejora la siguiente descripción: ${desc}`
+              content: `Mejora la siguiente descripción, solo dame la respuesta: ${desc}`
             }
           ]
         },
@@ -55,10 +56,36 @@ const ProyectForm = () => {
       setDescription(improvedDescription);
     } catch (error) {
       console.error('Error al procesar la descripción con GPT:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('Request data:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    adjustTextareaHeight();
+  };
+
+  const adjustTextareaHeight = () => {
+    const textarea = descriptionRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto'; 
+      textarea.style.height = `${textarea.scrollHeight}px`; 
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [description]);
 
   return (
     <CCard>
@@ -66,29 +93,34 @@ const ProyectForm = () => {
         Crear Proyecto
       </CCardHeader>
       <CCardBody>
-        <CForm onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <CFormLabel htmlFor="projectName">Nombre del Proyecto</CFormLabel>
-            <CFormInput
-              type="text"
-              id="projectName"
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <CFormLabel htmlFor="description">Descripción</CFormLabel>
-            <CFormInput
-              type="text"
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-          <CButton type="submit" color="primary" disabled={loading}>
-            {loading ? <CSpinner size="sm" /> : 'Enviar'}
-          </CButton>
-        </CForm>
+        <div style={{ width: '80%', margin: '0 auto' }}>
+          <CForm onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <CFormLabel htmlFor="projectName">Nombre del Proyecto</CFormLabel>
+              <CFormInput
+                type="text"
+                id="projectName"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="description">Descripción</CFormLabel>
+              <textarea
+                id="description"
+                value={description}
+                onChange={handleDescriptionChange}
+                ref={descriptionRef}
+                rows={1} 
+                style={{ resize: 'none', overflow: 'hidden', width: '100%' }} 
+                className="form-control" 
+              />
+            </div>
+            <CButton type="submit" color="primary" disabled={loading}>
+              {loading ? <CSpinner size="sm" /> : 'Mejorar descripcion'}
+            </CButton>
+          </CForm>
+        </div>
       </CCardBody>
     </CCard>
   );

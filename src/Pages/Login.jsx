@@ -16,7 +16,6 @@ export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
 
-
   const [formData, setFormData] = useState({
     email: '',
     contrasena: ''
@@ -75,45 +74,46 @@ export default function Login() {
   return (
     <FullHeightLayout>
       <div className="login-container">
-      <CForm onSubmit={handleSubmit} className="login-form">
-        <h2>Inicia Sesión</h2>
-        <CFormLabel htmlFor="email">Email</CFormLabel>
-        <CFormInput
-          id="email"
-          name="email"
-          type="text"
-          placeholder="Ingresa tu email"
-          value={formData.email}
-          onChange={handleChange}
-          invalid={!!errors.email}
-        />
-        <CFormFeedback className='mb-1' invalid>{errors.email}</CFormFeedback>
+        <CForm onSubmit={handleSubmit} className="login-form">
+          <h2>Inicia Sesión</h2>
+          <CFormLabel htmlFor="email">Email</CFormLabel>
+          <CFormInput
+            id="email"
+            name="email"
+            type="text"
+            placeholder="Ingresa tu email"
+            value={formData.email}
+            onChange={handleChange}
+            invalid={!!errors.email}
+          />
+          <CFormFeedback className='mb-1' invalid>{errors.email}</CFormFeedback>
 
-        <CFormLabel htmlFor="contrasena">Contraseña</CFormLabel>
-        <CFormInput
-          id="contrasena"
-          name="contrasena"
-          type="password"
-          placeholder="Ingresa tu contraseña"
-          value={formData.contrasena}
-          onChange={handleChange}
-          invalid={!!errors.contrasena}
-        />
-        <CFormFeedback className='mb-3' invalid>{errors.contrasena}</CFormFeedback>
+          <CFormLabel htmlFor="contrasena">Contraseña</CFormLabel>
+          <CFormInput
+            id="contrasena"
+            name="contrasena"
+            type="password"
+            placeholder="Ingresa tu contraseña"
+            value={formData.contrasena}
+            onChange={handleChange}
+            invalid={!!errors.contrasena}
+          />
+          <CFormFeedback className='mb-3' invalid>{errors.contrasena}</CFormFeedback>
 
-        <div className="mt-3 text-center">
-          <p>¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link></p>
-        </div>
+          <div className="mt-3 text-center links-container">
+            <p className='m-0'>¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link></p>
+            <p>¿Olvidaste tu contraseña? <Link to="/forgot-password">Recupérala aquí</Link></p>
+          </div>
 
-        {isLoading ? (
-          <CButton color="primary" disabled>
-            <CSpinner as="span" size="sm" aria-hidden="true" />
-            Loading...
-          </CButton>
-        ) : (
-          <CButton color="primary" type="submit">Login</CButton>
-        )}
-      </CForm>
+          {isLoading ? (
+            <CButton color="primary" disabled>
+              <CSpinner as="span" size="sm" aria-hidden="true" />
+              Loading...
+            </CButton>
+          ) : (
+            <CButton color="primary" type="submit">Login</CButton>
+          )}
+        </CForm>
       </div>
     </FullHeightLayout>
   );

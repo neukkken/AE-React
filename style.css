@@ -38,9 +38,16 @@ body{
 
 .main-content {
   flex: 1;
+  width: 80%;
+  margin: 0 auto;
+  padding: 1% 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-container {
+.login-container, .forgot-password-container {
   width: 80%;
   display: flex;
   justify-content: center;
@@ -49,7 +56,7 @@ body{
   background-color: #f8f9fa; 
 }
 
-.login-form {
+.login-form, .forgot-password-form {
   width: 100%;
   max-width: 400px;
   padding: 2rem;
@@ -57,6 +64,7 @@ body{
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .login-form h2 {
   margin-bottom: 1rem;
@@ -91,7 +99,6 @@ body{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
-/* Animación de aumento de transparencia */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -101,7 +108,32 @@ body{
   }
 }
 
-/* Aplicar la animación al body */
 .fade-in {
   animation: fadeIn 1s ease-in-out;
+}
+
+
+.project-overview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.project-overview-card {
+  width: 400px;  
+  margin: 20px;
+}
+
+.project-overview-card img {
+  width: 100%;  
+  height: auto; 
+  max-height: 150px; 
+}
+
+.created-by-label {
+  font-weight: bold; 
+  color: #6c757d; 
+  display: inline-block; 
+  margin-right: 5px; 
 }

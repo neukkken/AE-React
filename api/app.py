@@ -1,30 +1,20 @@
-import openai
+import os
+from openai import OpenAI
 
-API_KEY = ''
+client = OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY"),
+)
 
-openai.api_key = API_KEY
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Say this is a test",
+        }
+    ],
+    model="gpt-3.5-turbo",
+)
 
-def get_chat_completion():
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "Who won the world series in 2020?"}
-            ]
-        )
-        return response.choices[0].message['content']
-    except openai.error.AuthenticationError as e:
-        print(f"Error de autenticación: {e}")
-    except openai.error.RateLimitError as e:
-        print(f"Error de límite de cuota: {e}")
-    except Exception as e:
-        print(f"Error: {e}")
-
-if __name__ == "__main__":
-    result = get_chat_completion()
-    if result:
-        print(result)
 
 #tira este error, el mismo del frontend, deberia usar el motor 
 

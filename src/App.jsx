@@ -9,15 +9,21 @@ import HomeAdmin from './Pages/administrador/Home';
 import Register from './Pages/Register';
 import HomeUsers from './Pages/usuarios/Home';
 import UploadProyect from './Pages/usuarios/UploadProyect';
+import MyProyects from './Pages/usuarios/MyProyects';
+import ForgotPasswordForm from './Pages/ForgotPassword';
+import Projects from './Pages/administrador/Projects';
 
 const AppRoutes = () => {
   let routes = useRoutes([
     { path: "/", element: <Landing /> },
     { path: '/login', element: <Login /> },
     { path: '/register', element: <Register /> },
+    { path: '/forgot-password', element: <ForgotPasswordForm/> },
     { path: '/administrador/home', element: <HomeAdmin /> },
+    { path: '/administrador/proyectos', element: <Projects /> },
     { path: '/usuarios/home', element: <HomeUsers /> },
-    { path: '/usuarios/nuevoproyecto', element: <UploadProyect /> }
+    { path: '/usuarios/nuevoproyecto', element: <UploadProyect /> },
+    { path: '/usuarios/misproyectos', element: <MyProyects /> }
   ]);
 
   return routes;
