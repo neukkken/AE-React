@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './SubirProyecto.css';
 
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
