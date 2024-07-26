@@ -3,6 +3,8 @@ import { CCard, CCardBody, CCardImage, CCardTitle, CCardText, CButton } from '@c
 import '@coreui/coreui/dist/css/coreui.min.css';
 
 const ProjectOverviewCard = ({ data }) => {
+
+  console.log(data.usuarioId.nombre)
   return (
     <CCard className="project-overview-card">
       <CCardImage orientation="top" src="https://via.placeholder.com/300" alt={`${data.titulo} image`} />

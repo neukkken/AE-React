@@ -23,11 +23,13 @@ const Projects = () => {
         });
     }, [])
 
+    
+
     return (
         <AdminLayout>
             {
                 projects && projects.map((project) => (
-                    <ProjectOverviewCard key={project.id} data={project} />
+                    <ProjectOverviewCard key={project._id} data={project} />
                 ))
             }
         </AdminLayout>
