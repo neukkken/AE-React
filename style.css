@@ -57,7 +57,7 @@ body{
   background-color: #f8f9fa; 
 }
 
-.login-form, .forgot-password-form {
+.login-form, .forgot-password-form, .reset-password-form {
   width: 100%;
   max-width: 400px;
   padding: 2rem;
@@ -75,7 +75,7 @@ body{
   margin-bottom: 1rem;
 }
 
-.FullHeightLayout{
+.FullHeightLayout, .reset-password-container{
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -138,4 +138,105 @@ body{
   display: inline-block; 
   margin-right: 5px; 
 }
-/* Estilos adicionales para el formulario de subir proyecto */
+
+.selectorContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 1000;
+
+}
+
+.selectorButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.selectorButton:hover {
+  background-color: #45a049;
+}
+
+/* Animación */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.selectorButton {
+  animation: slideIn 0.5s ease forwards;
+  animation-delay: 0.2s;
+}
+
+/* Estilos del dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.dropdown-content button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content button:hover {
+  background-color: #45a049;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  /* Espacio entre tarjetas */
+}
+
+.card-container .card {
+  flex: 1 1 calc(50% - 2rem);
+  /* 50% del ancho del contenedor menos margen */
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+}

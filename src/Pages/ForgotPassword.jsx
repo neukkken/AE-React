@@ -25,7 +25,7 @@ const ForgotPasswordForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://tu-api.com/auth/forgot-password', { email });
+      const response = await axios.post('https://projetback-r7o8.onrender.com/auth/forgot-password', { email });
       setMessage('Un enlace para restablecer tu contraseña ha sido enviado a tu email.');
       setError('');
     } catch (error) {
@@ -56,8 +56,9 @@ const ForgotPasswordForm = () => {
 
         {message && <p className="text-success">{message}</p>}
         <div className="mt-3 text-center">
-          <p className="mb-3">¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link></p>
+          <p className="mb-1">¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link></p>
         </div>
+
         {isLoading ? (
           <CButton color="primary" disabled>
             <CSpinner as="span" size="sm" aria-hidden="true" />
@@ -66,7 +67,7 @@ const ForgotPasswordForm = () => {
         ) : (
           <CButton color="primary" type="submit">Enviar</CButton>
         )}
-
+          
         
         
         </CForm>
