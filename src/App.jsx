@@ -14,6 +14,7 @@ import ForgotPasswordForm from './Pages/ForgotPassword';
 import Projects from './Pages/administrador/Projects';
 import VisualizarUsuarios from './Pages/administrador/VisualizarUsuarios';
 import ResetPassword from './Pages/ResetPassword';
+import Perfil from './Pages/Perfil';
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -27,7 +28,9 @@ const AppRoutes = () => {
     { path: '/administrador/usuarios', element: <VisualizarUsuarios /> },
     { path: '/usuarios/home', element: <HomeUsers /> },
     { path: '/usuarios/nuevoproyecto', element: <UploadProyect /> },
-    { path: '/usuarios/misproyectos', element: <MyProyects /> }
+    { path: '/usuarios/misproyectos', element: <MyProyects /> },
+    { path: '/usuarios/perfil', element: <Perfil /> },
+    { path: '/administrador/perfil', element: <Perfil /> }
   ]);
 
   return routes;

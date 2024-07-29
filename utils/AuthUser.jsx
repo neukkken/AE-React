@@ -4,9 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const URL_API_AUTH = "https://projetback-r7o8.onrender.com/auth/profile";
 
 const roleToRouteMap = {
-  "Administrador": ["/administrador/home", "/administrador/nuevosproyectos", '/administrador/proyectos', '/administrador/usuarios'],
-  "Aprendiz": ["/usuarios/home", "/usuarios/nuevoproyecto", "/usuarios/misproyectos"],
-  "Usuario": ["/usuarios/home", "/usuarios/nuevoproyecto", "/usuarios/misproyectos"],
+  "Administrador": ["/administrador/home", "/administrador/nuevosproyectos", '/administrador/proyectos', '/administrador/usuarios', '/administrador/perfil'],
+  "Usuario": ["/usuarios/home", "/usuarios/nuevoproyecto", "/usuarios/misproyectos", "/usuarios/perfil"],
 };
 
 const AuthUser = async (accessToken, setUser, navigate, currentRoute) => {

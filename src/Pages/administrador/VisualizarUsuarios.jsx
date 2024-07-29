@@ -11,6 +11,7 @@ export default function VisualizarUsuarios() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editingUser, setEditingUser] = useState(null);
+    const [originalUser, setOriginalUser] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem("token");
 
@@ -48,12 +49,14 @@ export default function VisualizarUsuarios() {
 
     const handleEditClick = (user) => {
         setEditingUser(user);
+        setOriginalUser(user); // Guardar los datos originales del usuario para comparaciones posteriores
         setShowModal(true);
     };
 
     const handleClose = () => {
         setShowModal(false);
         setEditingUser(null);
+        setOriginalUser(null); // Resetear los datos originales del usuario
     };
 
     const handleDelete = async (userId) => {
@@ -79,11 +82,22 @@ export default function VisualizarUsuarios() {
             return;
         }
 
-        // Excluir contrasena del objeto de datos antes de enviarlo
-        const { contrasena, ...userData } = editingUser;
+        const changes = {};
+        for (let key in editingUser) {
+            if (key !== "email" && editingUser[key] !== originalUser[key]) {
+                changes[key] = editingUser[key];
+            }
+        }
+
+        // Verificar si hay cambios
+        if (Object.keys(changes).length === 0) {
+            alert('No hay cambios para guardar.');
+            handleClose();
+            return;
+        }
 
         try {
-            const response = await axios.patch(`https://projetback-r7o8.onrender.com/auth/usuario/${editingUser._id}`, userData, {
+            const response = await axios.patch(`https://projetback-r7o8.onrender.com/auth/usuario/${editingUser._id}`, changes, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -93,7 +107,12 @@ export default function VisualizarUsuarios() {
             handleClose();
             fetchUsuariosWithRetry();
         } catch (err) {
-            console.error('Error al actualizar usuario:', err);
+            if (err.response && err.response.status === 409) {
+                alert('Error: El correo electrónico ya está registrado.');
+            } else {
+                alert('Error al actualizar usuario.');
+                console.error('Error al actualizar usuario:', err);
+            }
         }
     };
 
