@@ -2,29 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../Pages/css/Review.css';
 
-const RevisionHistory = ({ revisiones }) => {
+const RevisionHistory = ({ revisiones, isOpen, onClose }) => {
+  if (!isOpen) return null;
+
   return (
-    <div className="historial-revisiones">
-      <h4>Historial de Revisiones</h4>
-      {revisiones && revisiones.length > 0 ? (
-        <ul>
-          {revisiones.map((revision, index) => (
-            <li key={index}>
-              <strong>Estado:</strong> {revision.estado}
-              <br />
-              <strong>Fecha:</strong> {new Date(revision.fecha).toLocaleString()}
-              {revision.comentario && (
-                <>
-                  <br />
-                  <strong>Comentario:</strong> {revision.comentario}
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No hay revisiones disponibles para este proyecto.</p>
-      )}
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h4>Historial de Revisiones</h4>
+        {revisiones && revisiones.length > 0 ? (
+          <ul>
+            {revisiones.map((revision, index) => (
+              <li key={index}>
+                <strong>Estado:</strong> {revision.estado}
+                <br />
+                <strong>Fecha:</strong> {new Date(revision.fecha).toLocaleString()}
+                {revision.comentario && (
+                  <>
+                    <br />
+                    <strong>Comentario:</strong> {revision.comentario}
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No hay revisiones disponibles para este proyecto.</p>
+        )}
+        <button onClick={onClose}>Cerrar</button>
+      </div>
     </div>
   );
 };
@@ -34,6 +39,7 @@ const Review = () => {
   const [error, setError] = useState(null);
   const [responseDetails, setResponseDetails] = useState(null);
   const [aprobacionMensaje, setAprobacionMensaje] = useState(null);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const location = useLocation();
   const projectId = location.state?.projectId;
 
@@ -137,6 +143,7 @@ const Review = () => {
               <span className="icono-no-aprobado" onClick={() => handleAprobacion(false)}>✗</span>
             </div>
           </div>
+          <div className="letrero-descripcion">Descripción del Proyecto</div>
           <p><strong>Descripción:</strong> {projectData.descripcion}</p>
           <p><strong>Fecha:</strong> {projectData.fecha}</p>
           <p><strong>Estado:</strong> {projectData.estado}</p>
@@ -158,7 +165,13 @@ const Review = () => {
             <p>No hay secciones disponibles para este proyecto.</p>
           )}
 
-          <RevisionHistory revisiones={projectData.revisiones} />
+          <button onClick={() => setIsHistoryModalOpen(true)}>Ver Historial de Revisiones</button>
+
+          <RevisionHistory 
+            revisiones={projectData.revisiones} 
+            isOpen={isHistoryModalOpen}
+            onClose={() => setIsHistoryModalOpen(false)}
+          />
         </div>
       ) : (
         <p className="mensaje-carga">Cargando datos del proyecto...</p>
